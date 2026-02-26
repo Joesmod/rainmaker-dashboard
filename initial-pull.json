@@ -1,0 +1,120 @@
+{
+  "pullTimestamp": "2026-02-26T02:45:00Z",
+  "accounts": {
+    "rainmakercorp": {
+      "handle": "@RainmakerCorp",
+      "name": "Rainmaker Technology Corporation",
+      "verified": true,
+      "followers": 13100,
+      "following": 39,
+      "posts": 345,
+      "location": "El Segundo",
+      "bio": "Next-gen cloud seeding for farms, ecosystems, and communities. Water to the people.",
+      "joined": "October 2023",
+      "website": "linktr.ee/rainmakercorp"
+    },
+    "adoricko": {
+      "handle": "@ADoricko",
+      "name": "Augustus Doricko",
+      "role": "CEO",
+      "verified": true,
+      "followers": 36000,
+      "following": 1215,
+      "posts": 12800,
+      "location": "El Segundo, CA",
+      "bio": "\"the face of Big Cloud\". making it rain (and snow) @RainmakerCorp",
+      "joined": "December 2020",
+      "website": "rainmaker.com"
+    }
+  },
+  "recentPosts": [
+    {
+      "id": "1990464237853114716",
+      "account": "@ADoricko",
+      "date": "2025-11-17",
+      "isPinned": true,
+      "content": "We can refill the Great Salt Lake. This month, Rainmaker began the largest cloud seeding project in modern American history. With Utah and Idaho, we are enhancing snowpack across 7,500 square miles of the Bear River Basin.",
+      "metrics": {
+        "replies": 171,
+        "reposts": 210,
+        "likes": 1350,
+        "views": 280571,
+        "bookmarks": 332
+      },
+      "hasVideo": true,
+      "sentiment": null
+    },
+    {
+      "id": "2026363889328468047",
+      "account": "@RainmakerCorp",
+      "date": "2026-02-24",
+      "isPinned": true,
+      "content": "\"I think that the most important thing for Rainmaker to do this season is just to make unambiguous evidence of manmade snow — and do it so often that it is undeniably a viable and scalable technology.\" Around the world we are seeing rising demand for efficient and reliable ways...",
+      "metrics": {
+        "replies": 1,
+        "reposts": 2,
+        "likes": 44,
+        "views": 1642,
+        "bookmarks": 1
+      },
+      "hasImage": true,
+      "sentiment": null
+    },
+    {
+      "id": "2026673060154323163",
+      "account": "@RainmakerCorp",
+      "type": "repost",
+      "originalAuthor": "@m_goes_distance",
+      "date": "2026-02-25",
+      "content": "We can control the weather. But are we ready? I interviewed @ADoricko, founder of @RainmakerCorp, which flies drones directly into clouds to increase rainfall at scale - and one day terraform entire planets.",
+      "metrics": {
+        "replies": 3,
+        "reposts": 5,
+        "likes": 18,
+        "views": 2655,
+        "bookmarks": 10
+      },
+      "hasVideo": true,
+      "sentiment": null
+    },
+    {
+      "id": "2026314692944146621",
+      "account": "@RainmakerCorp",
+      "type": "repost",
+      "originalAuthor": "@sltrib",
+      "date": "2026-02-24",
+      "content": "President Donald Trump pledged to help Utah save the Great Salt Lake — and make it \"GREAT AGAIN.\" Utah leaders said they are preparing an ask for a $1 billion in support.",
+      "metrics": {
+        "replies": 17,
+        "reposts": 8,
+        "likes": 36,
+        "views": 7789,
+        "bookmarks": 1
+      },
+      "hasLink": true,
+      "sentiment": null
+    }
+  ],
+  "aggregateMetrics": {
+    "totalFollowers": 49100,
+    "totalPosts": 13145,
+    "recentEngagement": {
+      "totalReplies": 192,
+      "totalReposts": 225,
+      "totalLikes": 1448,
+      "totalViews": 292657
+    }
+  },
+  "keyTopics": [
+    "Great Salt Lake",
+    "cloud seeding",
+    "weather modification",
+    "Utah",
+    "Trump administration",
+    "water scarcity"
+  ],
+  "notableFollowers": [
+    "Beff (e/acc)",
+    "Nathan Halberstadt"
+  ]
+}

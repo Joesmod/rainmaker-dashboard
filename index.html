@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Scoring Dashboard | Rainmaker</title>
+    <link rel="icon" href="https://www.rainmaker.com/favicon.ico">
+    <style>
+        :root {
+            --forest: #1c2c26;
+            --pine: #103d1d;
+            --canopy: #275f4b;
+            --sage: #628c7d;
+            --grassland: #275f4b;
+            --obsidian: #030200;
+            --mist: #f5f5f1;
+            --cloud: #e0ded7;
+            --wheat: #daba89;
+            --hi-vis: #e5ff42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Founders Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--forest);
+            color: var(--mist);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            padding: 2rem 5vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--sage);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 44px;
+            fill: var(--mist);
+        }
+
+        .logo-text {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 28px;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .header-meta {
+            font-size: 14px;
+            color: var(--sage);
+            text-align: right;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 5vw;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+        }
+
+        .hero-eyebrow {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--sage);
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 400;
+            line-height: 1.04;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--cloud);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--pine) 0%, var(--canopy) 100%);
+            border: 1px solid var(--sage);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-value {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--hi-vis);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--sage);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--sage);
+        }
+
+        .section-title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 32px;
+            font-weight: 400;
+        }
+
+        .section-eyebrow {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--sage);
+        }
+
+        /* Account Cards */
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .account-card {
+            background: var(--pine);
+            border: 1px solid var(--sage);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .account-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .account-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--canopy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .account-info h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .account-handle {
+            font-size: 14px;
+            color: var(--sage);
+        }
+
+        .account-role {
+            font-size: 12px;
+            color: var(--wheat);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .account-bio {
+            font-size: 14px;
+            color: var(--cloud);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .account-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .account-stat-value {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--hi-vis);
+        }
+
+        .account-stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--sage);
+        }
+
+        /* Posts Section */
+        .posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .post-card {
+            background: var(--pine);
+            border: 1px solid var(--sage);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .post-card.pinned {
+            border-color: var(--hi-vis);
+        }
+
+        .post-pinned-badge {
+            position: absolute;
+            top: -10px;
+            right: 1rem;
+            background: var(--hi-vis);
+            color: var(--forest);
+            font-size: 10px;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-author {
+            font-weight: 500;
+            color: var(--wheat);
+        }
+
+        .post-date {
+            font-size: 14px;
+            color: var(--sage);
+        }
+
+        .post-type {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--canopy);
+            background: rgba(39, 95, 75, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .post-content {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: var(--mist);
+        }
+
+        .post-original-author {
+            font-size: 12px;
+            color: var(--sage);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-metrics {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .post-metric {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 14px;
+            color: var(--sage);
+        }
+
+        .post-metric-value {
+            color: var(--mist);
+            font-weight: 500;
+        }
+
+        /* Topics Section */
+        .topics-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 4rem;
+        }
+
+        .topic-tag {
+            background: var(--canopy);
+            color: var(--mist);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .topic-tag:hover {
+            background: var(--grassland);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem 5vw;
+            border-top: 1px solid var(--sage);
+            text-align: center;
+            color: var(--sage);
+            font-size: 14px;
+        }
+
+        .footer-brand {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 18px;
+            text-transform: uppercase;
+            color: var(--canopy);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--sage);
+            border-top-color: var(--hi-vis);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .header-meta {
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-value {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <svg viewBox="0 0 258 357" xmlns="http://www.w3.org/2000/svg">
+                <path d="M49.922 210.591C32.3024 210.591 21.8146 218.142 9.64878 230.308L5.03415 234.923L0 239.957L7.97073 247.927L13.0049 242.893L14.2634 241.635C28.9463 226.952 49.922 230.728 49.922 262.61V210.591ZM126.273 266.805C120.4 266.805 95.2293 269.741 95.2293 304.56V346.091L126.693 314.628V293.234C126.693 288.2 130.888 283.166 137.6 283.166C142.215 283.166 144.312 284.424 150.605 290.717L157.317 284.005L149.766 276.873C144.312 271.419 136.761 266.805 126.273 266.805ZM126.273 0C120.4 0 95.2293 2.93653 95.2293 37.7554V69.6378H104.878L126.693 47.8235V26.4288C126.693 21.3947 130.888 16.3607 137.6 16.3607C142.215 16.3607 144.312 17.6192 150.605 23.9118L157.317 17.1997L149.766 10.0681C144.312 4.61455 136.761 0 126.273 0ZM95.2293 69.6378V356.159H104.878V69.6378H95.2293ZM87.6781 230.728V131.305L134.663 84.3204C134.244 84.7399 133.405 90.1935 133.405 93.969C133.405 109.91 138.439 123.754 148.927 133.402C160.254 144.31 174.098 143.471 174.937 143.471L87.6781 230.728ZM87.6781 91.452C87.6781 39.4334 56.2146 39.4334 49.922 39.4334C32.3024 39.4334 21.8146 46.9845 9.64878 59.1501L5.03415 63.7647L0 68.7987L7.97073 76.7693L13.0049 71.7353L14.2634 70.4768C28.9463 55.7941 49.922 59.5696 49.922 91.452V256.317C49.922 283.585 47.4049 309.175 29.7854 326.794L29.3659 327.214L7.97073 348.189L15.9415 356.159L39.0146 333.087L49.922 322.18C77.6098 294.492 87.6781 282.746 87.6781 257.156V246.249L119.141 215.206C130.888 203.46 142.215 203.46 147.668 203.46C166.127 203.46 177.873 216.045 177.873 250.025V304.56C177.873 321.76 177.873 356.159 215.629 356.159C223.6 356.159 231.571 351.964 239.122 344.413L258 325.955L250.029 317.984L240.38 327.633C237.863 330.15 234.507 333.087 228.634 333.087C219.405 333.087 215.629 328.053 215.629 304.56V250.025C215.629 180.387 178.293 180.387 166.966 180.387C162.351 180.387 151.444 182.484 144.312 189.616L215.629 118.3L207.659 110.749C200.946 116.203 185.844 115.783 176.615 107.813C166.966 99.8421 162.351 90.1935 162.351 73.8328C162.351 66.7012 164.868 54.1161 172.42 46.565L172.839 46.1455L164.868 38.1749L87.6781 115.364V91.452Z"/>
+            </svg>
+            <span class="logo-text">Rainmaker</span>
+        </div>
+        <div class="header-meta">
+            <div>Social Scoring Dashboard</div>
+            <div id="last-updated">Loading...</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-eyebrow">Performance Analytics</div>
+            <h1>Social Presence Metrics</h1>
+            <p class="hero-subtitle">Real-time monitoring of Rainmaker's social media presence and engagement.</p>
+        </section>
+
+        <section class="stats-grid" id="stats-grid">
+            <div class="loading"><div class="loading-spinner"></div></div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Accounts</h2>
+                <span class="section-eyebrow">Monitored Profiles</span>
+            </div>
+            <div class="accounts-grid" id="accounts-grid">
+                <div class="loading"><div class="loading-spinner"></div></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Key Topics</h2>
+                <span class="section-eyebrow">Trending Themes</span>
+            </div>
+            <div class="topics-grid" id="topics-grid">
+                <div class="loading"><div class="loading-spinner"></div></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Recent Posts</h2>
+                <span class="section-eyebrow">Latest Activity</span>
+            </div>
+            <div class="posts-list" id="posts-list">
+                <div class="loading"><div class="loading-spinner"></div></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-brand">Rainmaker</div>
+        <div>Rain. Made in America. | El Segundo, California</div>
+        <div style="margin-top: 0.5rem;">© 2026 Rainmaker Technology Corporation</div>
+    </footer>
+
+    <script>
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toLocaleString();
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        async function loadData() {
+            try {
+                const response = await fetch('initial-pull.json');
+                const data = await response.json();
+                renderDashboard(data);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.querySelectorAll('.loading').forEach(el => {
+                    el.innerHTML = '<p style="color: var(--sage);">Error loading data. Please refresh.</p>';
+                });
+            }
+        }
+
+        function renderDashboard(data) {
+            // Update timestamp
+            const timestamp = new Date(data.pullTimestamp);
+            document.getElementById('last-updated').textContent = 
+                `Last updated: ${timestamp.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+
+            // Stats Grid
+            const stats = data.aggregateMetrics;
+            document.getElementById('stats-grid').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${formatNumber(stats.totalFollowers)}</div>
+                    <div class="stat-label">Total Followers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${formatNumber(stats.totalPosts)}</div>
+                    <div class="stat-label">Total Posts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${formatNumber(stats.recentEngagement.totalViews)}</div>
+                    <div class="stat-label">Recent Views</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${formatNumber(stats.recentEngagement.totalLikes)}</div>
+                    <div class="stat-label">Recent Likes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${formatNumber(stats.recentEngagement.totalReposts)}</div>
+                    <div class="stat-label">Reposts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${formatNumber(stats.recentEngagement.totalReplies)}</div>
+                    <div class="stat-label">Replies</div>
+                </div>
+            `;
+
+            // Accounts Grid
+            const accounts = data.accounts;
+            document.getElementById('accounts-grid').innerHTML = Object.entries(accounts).map(([key, acc]) => `
+                <div class="account-card">
+                    <div class="account-header">
+                        <div class="account-avatar">${acc.name.charAt(0)}</div>
+                        <div class="account-info">
+                            <h3>${acc.name}</h3>
+                            <div class="account-handle">${acc.handle}</div>
+                            ${acc.role ? `<div class="account-role">${acc.role}</div>` : ''}
+                        </div>
+                    </div>
+                    <p class="account-bio">"${acc.bio}"</p>
+                    <div class="account-stats">
+                        <div>
+                            <div class="account-stat-value">${formatNumber(acc.followers)}</div>
+                            <div class="account-stat-label">Followers</div>
+                        </div>
+                        <div>
+                            <div class="account-stat-value">${formatNumber(acc.following)}</div>
+                            <div class="account-stat-label">Following</div>
+                        </div>
+                        <div>
+                            <div class="account-stat-value">${formatNumber(acc.posts)}</div>
+                            <div class="account-stat-label">Posts</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Topics Grid
+            document.getElementById('topics-grid').innerHTML = data.keyTopics.map(topic => 
+                `<span class="topic-tag">${topic}</span>`
+            ).join('');
+
+            // Posts List
+            document.getElementById('posts-list').innerHTML = data.recentPosts.map(post => `
+                <div class="post-card ${post.isPinned ? 'pinned' : ''}">
+                    ${post.isPinned ? '<span class="post-pinned-badge">📌 Pinned</span>' : ''}
+                    <div class="post-meta">
+                        <div>
+                            <span class="post-author">${post.account}</span>
+                            ${post.type ? `<span class="post-type">${post.type}</span>` : ''}
+                        </div>
+                        <span class="post-date">${formatDate(post.date)}</span>
+                    </div>
+                    ${post.originalAuthor ? `<div class="post-original-author">Originally by ${post.originalAuthor}</div>` : ''}
+                    <p class="post-content">${post.content}</p>
+                    <div class="post-metrics">
+                        <span class="post-metric">💬 <span class="post-metric-value">${formatNumber(post.metrics.replies)}</span></span>
+                        <span class="post-metric">🔄 <span class="post-metric-value">${formatNumber(post.metrics.reposts)}</span></span>
+                        <span class="post-metric">❤️ <span class="post-metric-value">${formatNumber(post.metrics.likes)}</span></span>
+                        <span class="post-metric">👁️ <span class="post-metric-value">${formatNumber(post.metrics.views)}</span></span>
+                        <span class="post-metric">🔖 <span class="post-metric-value">${formatNumber(post.metrics.bookmarks)}</span></span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
