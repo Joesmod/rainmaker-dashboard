@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rainmaker Social Scoring Dashboard</title>
+<style>
+  :root { --bg: #0f1117; --card: #1a1d27; --border: #2a2d3a; --text: #e0e0e6; --dim: #8888aa; --accent: #5b8def; --green: #4ade80; --red: #f87171; --yellow: #fbbf24; --orange: #fb923c; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 24px; max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  .subtitle { color: var(--dim); font-size: 0.85rem; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .card h2 { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase; }
+  .badge-positive { background: rgba(74,222,128,0.15); color: var(--green); }
+  .badge-mixed, .badge-neutral { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .badge-negative { background: rgba(248,113,113,0.15); color: var(--red); }
+  .stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { color: var(--dim); font-size: 0.85rem; }
+  .stat-value { font-weight: 600; font-size: 0.95rem; }
+  .post { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .post:last-child { border-bottom: none; }
+  .post-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 0.8rem; color: var(--dim); flex-wrap: wrap; }
+  .post-text { font-size: 0.9rem; line-height: 1.45; margin-bottom: 8px; }
+  .post-stats { display: flex; gap: 16px; font-size: 0.8rem; color: var(--dim); }
+  .post-stats span { display: flex; align-items: center; gap: 3px; }
+  .risk-tag { background: rgba(248,113,113,0.15); color: var(--red); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+  .pinned-tag { background: rgba(91,141,239,0.15); color: var(--accent); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; }
+  .repost-tag { background: rgba(251,191,36,0.15); color: var(--yellow); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; }
+  .topics { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .topic { background: var(--border); color: var(--dim); font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; }
+  .risk-section { margin-top: 8px; }
+  .risk-item { padding: 6px 0; font-size: 0.85rem; color: var(--orange); }
+  .risk-item::before { content: "⚠ "; }
+  .full-width { grid-column: 1 / -1; }
+  .score-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; margin-right: 8px; flex-shrink: 0; }
+  .score-row { display: flex; align-items: center; margin-bottom: 12px; }
+  .score-row .details { font-size: 0.85rem; }
+  .score-row .details .name { font-weight: 600; }
+  .score-row .details .handle { color: var(--dim); }
+  .notable { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .notable-chip { background: rgba(91,141,239,0.12); color: var(--accent); font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; }
+  .section-card { margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<h1>🌧️ Rainmaker Social Scoring Dashboard</h1>
+<div class="subtitle" id="pull-time"></div>
+
+<div class="grid" id="accounts"></div>
+
+<div class="grid">
+  <div class="card section-card">
+    <h2>📊 Aggregate Metrics</h2>
+    <div id="aggregate"></div>
+  </div>
+  <div class="card section-card">
+    <h2>👥 Notable Followers</h2>
+    <div class="notable" id="notable"></div>
+    <div style="margin-top:12px">
+      <h2>⚠️ Risk Signals</h2>
+      <div class="risk-section" id="risks"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card full-width section-card">
+  <h2>📝 Recent Posts <span style="font-size:0.75rem;color:var(--dim);font-weight:400;margin-left:8px">sorted by views</span></h2>
+  <div id="posts"></div>
+</div>
+
+<script>
+const DATA_URL = 'initial-pull.json';
+
+function fmt(n) {
+  if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+  return n.toString();
+}
+
+function sentimentBadge(s) {
+  if (!s) return '';
+  const cls = s === 'positive' ? 'badge-positive' : s === 'negative' ? 'badge-negative' : 'badge-mixed';
+  return `<span class="badge ${cls}">${s}</span>`;
+}
+
+function scoreColor(n) {
+  if (n >= 7) return 'var(--green)';
+  if (n >= 5) return 'var(--yellow)';
+  return 'var(--red)';
+}
+
+async function init() {
+  const res = await fetch(DATA_URL);
+  const d = await res.json();
+
+  const ts = d.pullTimestamp || d.pulled_at;
+  document.getElementById('pull-time').textContent = `Data pulled: ${new Date(ts).toLocaleString()}`;
+
+  // Account cards
+  const accts = document.getElementById('accounts');
+  for (const [key, a] of Object.entries(d.accounts)) {
+    const score = a.sentiment_score || (a.sentiment === 'positive' ? 7 : a.sentiment === 'mixed' ? 6 : 5);
+    const color = scoreColor(score);
+    const name = a.name || a.handle;
+    const roleTag = a.role ? `<span style="color:var(--accent);font-size:0.75rem"> (${a.role})</span>` : '';
+    accts.innerHTML += `
+      <div class="card">
+        <div class="score-row">
+          <div class="score-circle" style="border: 3px solid ${color}; color: ${color}">${score}</div>
+          <div class="details">
+            <div class="name">${name}${roleTag}</div>
+            <div class="handle">${a.handle} ${a.verified ? '✓' : ''} ${sentimentBadge(a.sentiment)}</div>
+          </div>
+        </div>
+        <div class="stat-row"><span class="stat-label">Followers</span><span class="stat-value">${fmt(a.followers)}</span></div>
+        ${a.following ? `<div class="stat-row"><span class="stat-label">Following</span><span class="stat-value">${fmt(a.following)}</span></div>` : ''}
+        <div class="stat-row"><span class="stat-label">Posts</span><span class="stat-value">${fmt(a.posts)}</span></div>
+        ${a.location ? `<div class="stat-row"><span class="stat-label">Location</span><span class="stat-value">${a.location}</span></div>` : ''}
+        ${a.joined ? `<div class="stat-row"><span class="stat-label">Joined</span><span class="stat-value">${a.joined}</span></div>` : ''}
+        <div style="font-size:0.85rem;color:var(--dim);margin-top:8px;font-style:italic">"${a.bio}"</div>
+      </div>`;
+  }
+
+  // Aggregate
+  const ag = d.aggregateMetrics;
+  const re = ag.recentEngagement || {};
+  let agHtml = `
+    <div class="stat-row"><span class="stat-label">Combined Followers</span><span class="stat-value">${fmt(ag.totalFollowers)}</span></div>`;
+  if (ag.ceoToCorpFollowerRatio) agHtml += `<div class="stat-row"><span class="stat-label">CEO:Corp Follower Ratio</span><span class="stat-value">${ag.ceoToCorpFollowerRatio}x</span></div>`;
+  if (ag.avgEngagementCorp) agHtml += `<div class="stat-row"><span class="stat-label">Avg Engagement (Corp)</span><span class="stat-value">${fmt(ag.avgEngagementCorp)}</span></div>`;
+  if (ag.avgEngagementCeo) agHtml += `<div class="stat-row"><span class="stat-label">Avg Engagement (CEO)</span><span class="stat-value">${fmt(ag.avgEngagementCeo)}</span></div>`;
+  if (re.totalViews) agHtml += `<div class="stat-row"><span class="stat-label">Recent Total Views</span><span class="stat-value">${fmt(re.totalViews)}</span></div>`;
+  if (re.totalLikes) agHtml += `<div class="stat-row"><span class="stat-label">Recent Total Likes</span><span class="stat-value">${fmt(re.totalLikes)}</span></div>`;
+  if (d.keyTopics) agHtml += `<div class="stat-row"><span class="stat-label">Key Topics</span><span class="stat-value" style="text-align:right;max-width:60%">${d.keyTopics.join(', ')}</span></div>`;
+  document.getElementById('aggregate').innerHTML = agHtml;
+
+  // Notable followers
+  const notable = document.getElementById('notable');
+  (d.notableFollowers || []).forEach(f => {
+    notable.innerHTML += `<span class="notable-chip">${f}</span>`;
+  });
+
+  // Risks
+  const risks = document.getElementById('risks');
+  (d.riskSignals || []).forEach(r => {
+    risks.innerHTML += `<div class="risk-item">${r}</div>`;
+  });
+
+  // Posts — sorted by views desc
+  const posts = document.getElementById('posts');
+  const sortedPosts = [...(d.recentPosts || [])].sort((a, b) => (b.metrics?.views || 0) - (a.metrics?.views || 0));
+  sortedPosts.forEach(p => {
+    const m = p.metrics || {};
+    const tags = [];
+    if (p.isPinned) tags.push('<span class="pinned-tag">📌 PINNED</span>');
+    if (p.risk_flag) tags.push('<span class="risk-tag">🚨 RISK</span>');
+    if (p.type === 'repost') tags.push(`<span class="repost-tag">🔁 RT ${p.originalAuthor || ''}</span>`);
+    const text = p.content || p.text || '';
+    const topicsHtml = (p.topics || []).map(t => `<span class="topic">${t}</span>`).join('');
+    posts.innerHTML += `
+      <div class="post">
+        <div class="post-meta">
+          <strong>${p.account}</strong> · ${p.date} ${tags.join(' ')} ${sentimentBadge(p.sentiment)}
+        </div>
+        <div class="post-text">${text}</div>
+        <div class="post-stats">
+          <span>💬 ${fmt(m.replies || 0)}</span>
+          <span>🔁 ${fmt(m.reposts || 0)}</span>
+          <span>❤️ ${fmt(m.likes || 0)}</span>
+          <span>👁 ${fmt(m.views || 0)}</span>
+        </div>
+        ${topicsHtml ? `<div class="topics">${topicsHtml}</div>` : ''}
+      </div>`;
+  });
+}
+
+init();
+</script>
+</body>
+</html>
