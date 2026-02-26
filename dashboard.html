@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rainmaker Social Scoring Dashboard</title>
+<title>Social Scoring Dashboard | Rainmaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg: #0f1117; --card: #1a1d27; --border: #2a2d3a; --text: #e0e0e6; --dim: #8888aa; --accent: #5b8def; --green: #4ade80; --red: #f87171; --yellow: #fbbf24; --orange: #fb923c; }
+  :root { --bg: #1C2C26; --card: #233d34; --border: #375c4e; --text: #f5f5f1; --dim: #98C1D3; --accent: #E5FF42; --green: #E5FF42; --red: #f87171; --yellow: #C8A96E; --orange: #C8A96E; --mist: #98C1D3; --sage: #716d6a; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 24px; max-width: 1200px; margin: 0 auto; }
-  h1 { font-size: 1.6rem; margin-bottom: 4px; }
-  .subtitle { color: var(--dim); font-size: 0.85rem; margin-bottom: 24px; }
+  body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 300; background: var(--bg); color: var(--text); padding: 24px; max-width: 1200px; margin: 0 auto; letter-spacing: -0.01em; }
+  h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 2rem; margin-bottom: 4px; letter-spacing: -0.02em; }
+  .subtitle { color: var(--mist); font-size: 0.85rem; margin-bottom: 24px; font-weight: 300; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-bottom: 24px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  .card h2 { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .card h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
   .badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase; }
-  .badge-positive { background: rgba(74,222,128,0.15); color: var(--green); }
-  .badge-mixed, .badge-neutral { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .badge-positive { background: rgba(229,255,66,0.15); color: var(--green); }
+  .badge-mixed, .badge-neutral { background: rgba(200,169,110,0.15); color: var(--yellow); }
   .badge-negative { background: rgba(248,113,113,0.15); color: var(--red); }
   .stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); }
   .stat-row:last-child { border-bottom: none; }
-  .stat-label { color: var(--dim); font-size: 0.85rem; }
-  .stat-value { font-weight: 600; font-size: 0.95rem; }
+  .stat-label { color: var(--mist); font-size: 0.85rem; font-weight: 300; }
+  .stat-value { font-weight: 500; font-size: 0.95rem; }
   .post { padding: 14px 0; border-bottom: 1px solid var(--border); }
   .post:last-child { border-bottom: none; }
   .post-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 0.8rem; color: var(--dim); flex-wrap: wrap; }
@@ -28,27 +30,32 @@
   .post-stats { display: flex; gap: 16px; font-size: 0.8rem; color: var(--dim); }
   .post-stats span { display: flex; align-items: center; gap: 3px; }
   .risk-tag { background: rgba(248,113,113,0.15); color: var(--red); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
-  .pinned-tag { background: rgba(91,141,239,0.15); color: var(--accent); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; }
-  .repost-tag { background: rgba(251,191,36,0.15); color: var(--yellow); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; }
+  .pinned-tag { background: rgba(229,255,66,0.15); color: var(--accent); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; }
+  .repost-tag { background: rgba(218,186,137,0.15); color: var(--yellow); font-size: 0.7rem; padding: 1px 6px; border-radius: 4px; }
   .topics { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
   .topic { background: var(--border); color: var(--dim); font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; }
   .risk-section { margin-top: 8px; }
-  .risk-item { padding: 6px 0; font-size: 0.85rem; color: var(--orange); }
+  .risk-item { padding: 6px 0; font-size: 0.85rem; color: #daba89; }
   .risk-item::before { content: "⚠ "; }
   .full-width { grid-column: 1 / -1; }
   .score-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; margin-right: 8px; flex-shrink: 0; }
   .score-row { display: flex; align-items: center; margin-bottom: 12px; }
   .score-row .details { font-size: 0.85rem; }
   .score-row .details .name { font-weight: 600; }
-  .score-row .details .handle { color: var(--dim); }
+  .score-row .details .handle { color: var(--mist); }
   .notable { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-  .notable-chip { background: rgba(91,141,239,0.12); color: var(--accent); font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; }
+  .notable-chip { background: rgba(229,255,66,0.12); color: var(--accent); font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; font-weight: 400; }
   .section-card { margin-bottom: 24px; }
 </style>
 </head>
 <body>
 
-<h1>🌧️ Rainmaker Social Scoring Dashboard</h1>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:2px">
+  <div style="font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;font-weight:400">Rainmaker</div>
+  <div style="width:1px;height:20px;background:var(--border)"></div>
+  <div style="font-size:0.8rem;color:var(--mist);text-transform:uppercase;letter-spacing:0.1em;font-weight:400">Social Intelligence</div>
+</div>
+<h1>Scoring Dashboard</h1>
 <div class="subtitle" id="pull-time"></div>
 
 <div class="grid" id="accounts"></div>
@@ -89,9 +96,9 @@ function sentimentBadge(s) {
 }
 
 function scoreColor(n) {
-  if (n >= 7) return 'var(--green)';
-  if (n >= 5) return 'var(--yellow)';
-  return 'var(--red)';
+  if (n >= 7) return '#e5ff42';
+  if (n >= 5) return '#daba89';
+  return '#f87171';
 }
 
 async function init() {
@@ -182,7 +189,7 @@ async function init() {
 init();
 </script>
 <div style="text-align:center;color:var(--dim);font-size:0.75rem;padding:24px 0 12px;border-top:1px solid var(--border);margin-top:32px;">
-  Rainmaker Social Scoring · Built by Gumbo · Data refreshes daily at 6 AM CT · <span id="footer-ts"></span>
+  <span style="letter-spacing:0.05em;text-transform:uppercase">Rainmaker</span> · Social Scoring · Data refreshes daily at 6 AM CT · <span id="footer-ts"></span>
 </div>
 <script>
 fetch('initial-pull.json?t='+Date.now()).then(r=>r.json()).then(d=>{

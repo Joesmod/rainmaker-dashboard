@@ -1,7 +1,9 @@
 {
   "pullTimestamp": "2026-02-26T02:45:00Z",
   "pulled_at": "2026-02-25T20:45:00-06:00",
-  "sources": ["twitter"],
+  "sources": [
+    "twitter"
+  ],
   "accounts": {
     "rainmakercorp": {
       "handle": "@RainmakerCorp",
@@ -36,21 +38,128 @@
   "recentPosts": [
     {
       "account": "@ADoricko",
+      "date": "2025-07-05",
+      "content": "The natural disaster in the Texan Hill Country is a tragedy. My prayers are with Texas. Rainmaker did not operate in the affected area on the 3rd or 4th or contribute to the floods that occurred over the region.",
+      "metrics": {
+        "replies": 939,
+        "reposts": 698,
+        "likes": 3358,
+        "views": 1511575
+      },
+      "sentiment": "negative",
+      "risk_flag": true,
+      "topics": [
+        "Texas floods",
+        "controversy",
+        "conspiracy",
+        "denial"
+      ],
+      "engagement_score": 11658.58,
+      "risk_keywords": []
+    },
+    {
+      "account": "@ADoricko",
+      "date": "2025-06-22",
+      "content": "The elites have totally abandoned us and their responsibility to steward the nation",
+      "metrics": {
+        "replies": 242,
+        "reposts": 313,
+        "likes": 5191,
+        "views": 1643141
+      },
+      "sentiment": "negative",
+      "topics": [
+        "politics",
+        "anti-elite",
+        "populism"
+      ],
+      "engagement_score": 8983.14,
+      "risk_keywords": [],
+      "risk_flag": false
+    },
+    {
+      "account": "@ADoricko",
       "date": "2025-11-17",
       "isPinned": true,
       "content": "We can refill the Great Salt Lake. This month, Rainmaker began the largest cloud seeding project in modern American history. With Utah and Idaho, we are enhancing snowpack across 7,500 square miles of the Bear River Basin.",
-      "metrics": {"replies": 171, "reposts": 210, "likes": 1350, "views": 280573},
+      "metrics": {
+        "replies": 171,
+        "reposts": 210,
+        "likes": 1350,
+        "views": 280573
+      },
       "sentiment": "positive",
-      "topics": ["Great Salt Lake", "cloud seeding", "Utah", "Idaho", "Bear River Basin"]
+      "topics": [
+        "Great Salt Lake",
+        "cloud seeding",
+        "Utah",
+        "Idaho",
+        "Bear River Basin"
+      ],
+      "engagement_score": 3115.57,
+      "risk_keywords": [],
+      "risk_flag": false
+    },
+    {
+      "account": "@RainmakerCorp",
+      "date": "2025-11-11",
+      "content": "contacting reality keep your eye out for Rainmaker billboards across SLC",
+      "metrics": {
+        "replies": 16,
+        "reposts": 20,
+        "likes": 301,
+        "views": 92682
+      },
+      "sentiment": "positive",
+      "topics": [
+        "marketing",
+        "Salt Lake City",
+        "billboards"
+      ],
+      "engagement_score": 533.68,
+      "risk_keywords": [],
+      "risk_flag": false
+    },
+    {
+      "account": "@RainmakerCorp",
+      "date": "2025-09-15",
+      "content": "Billions of human beings need access to more freshwater. Rainmaker will help bring it to them with next-generation cloud seeding.",
+      "metrics": {
+        "replies": 15,
+        "reposts": 41,
+        "likes": 208,
+        "views": 90378
+      },
+      "sentiment": "positive",
+      "topics": [
+        "freshwater",
+        "mission",
+        "site launch"
+      ],
+      "engagement_score": 496.38,
+      "risk_keywords": [],
+      "risk_flag": false
     },
     {
       "account": "@RainmakerCorp",
       "date": "2026-02-24",
       "isPinned": true,
-      "content": "\"I think that the most important thing for Rainmaker to do this season is just to make unambiguous evidence of manmade snow — and do it so often that it is undeniably a viable and scalable technology.\"",
-      "metrics": {"replies": 1, "reposts": 2, "likes": 44, "views": 1643},
+      "content": "\"I think that the most important thing for Rainmaker to do this season is just to make unambiguous evidence of manmade snow \u00e2\u20ac\u201d and do it so often that it is undeniably a viable and scalable technology.\"",
+      "metrics": {
+        "replies": 1,
+        "reposts": 2,
+        "likes": 44,
+        "views": 1643
+      },
       "sentiment": "positive",
-      "topics": ["cloud seeding", "snow", "scalability"]
+      "topics": [
+        "cloud seeding",
+        "snow",
+        "scalability"
+      ],
+      "engagement_score": 56.64,
+      "risk_keywords": [],
+      "risk_flag": false
     },
     {
       "account": "@RainmakerCorp",
@@ -58,42 +167,19 @@
       "type": "repost",
       "originalAuthor": "@m_goes_distance",
       "content": "We can control the weather. But are we ready?",
-      "metrics": {"replies": 3, "reposts": 5, "likes": 18, "views": 2655},
+      "metrics": {
+        "replies": 3,
+        "reposts": 5,
+        "likes": 18,
+        "views": 2655
+      },
       "sentiment": "neutral",
-      "topics": ["weather modification"]
-    },
-    {
-      "account": "@RainmakerCorp",
-      "date": "2025-11-11",
-      "content": "contacting reality keep your eye out for Rainmaker billboards across SLC",
-      "metrics": {"replies": 16, "reposts": 20, "likes": 301, "views": 92682},
-      "sentiment": "positive",
-      "topics": ["marketing", "Salt Lake City", "billboards"]
-    },
-    {
-      "account": "@RainmakerCorp",
-      "date": "2025-09-15",
-      "content": "Billions of human beings need access to more freshwater. Rainmaker will help bring it to them with next-generation cloud seeding.",
-      "metrics": {"replies": 15, "reposts": 41, "likes": 208, "views": 90378},
-      "sentiment": "positive",
-      "topics": ["freshwater", "mission", "site launch"]
-    },
-    {
-      "account": "@ADoricko",
-      "date": "2025-07-05",
-      "content": "The natural disaster in the Texan Hill Country is a tragedy. My prayers are with Texas. Rainmaker did not operate in the affected area on the 3rd or 4th or contribute to the floods that occurred over the region.",
-      "metrics": {"replies": 939, "reposts": 698, "likes": 3358, "views": 1511575},
-      "sentiment": "negative",
-      "risk_flag": true,
-      "topics": ["Texas floods", "controversy", "conspiracy", "denial"]
-    },
-    {
-      "account": "@ADoricko",
-      "date": "2025-06-22",
-      "content": "The elites have totally abandoned us and their responsibility to steward the nation",
-      "metrics": {"replies": 242, "reposts": 313, "likes": 5191, "views": 1643141},
-      "sentiment": "negative",
-      "topics": ["politics", "anti-elite", "populism"]
+      "topics": [
+        "weather modification"
+      ],
+      "engagement_score": 50.66,
+      "risk_keywords": [],
+      "risk_flag": false
     }
   ],
   "aggregateMetrics": {
@@ -101,9 +187,32 @@
     "ceoToCorpFollowerRatio": 2.75,
     "avgEngagementCorp": 204,
     "avgEngagementCeo": 3090,
-    "recentEngagement": {"totalReplies": 192, "totalReposts": 225, "totalLikes": 1448, "totalViews": 292657}
+    "recentEngagement": {
+      "totalReplies": 192,
+      "totalReposts": 225,
+      "totalLikes": 1448,
+      "totalViews": 292657
+    }
   },
-  "keyTopics": ["Great Salt Lake", "cloud seeding", "weather modification", "Utah", "freshwater", "Trump policy"],
-  "notableFollowers": ["Beff (e/acc)", "Nathan Halberstadt"],
-  "riskSignals": ["Texas flood conspiracy attention", "politicized reply sections", "anti-establishment CEO rhetoric"]
+  "keyTopics": [
+    "Great Salt Lake",
+    "cloud seeding",
+    "weather modification",
+    "Utah",
+    "freshwater",
+    "Trump policy"
+  ],
+  "notableFollowers": [
+    "Beff (e/acc)",
+    "Nathan Halberstadt"
+  ],
+  "riskSignals": [
+    "controversy",
+    "Texas floods",
+    "conspiracy",
+    "denial",
+    "anti-establishment CEO rhetoric",
+    "Texas flood conspiracy attention",
+    "politicized reply sections"
+  ]
 }
