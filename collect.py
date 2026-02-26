@@ -218,6 +218,33 @@ def build_dashboard_json(scored_tweets, brand_score):
         "totalTweets": total
     })
     
+    # Detect risk alerts from today's tweets
+    risk_alerts = existing.get("riskAlerts", [])
+    conspiracy_keywords = ["chemtrail", "weather control", "government", "conspiracy", "hoax", "geo-engineer", "haarp"]
+    for t in scored_tweets:
+        metrics = t.get("metrics", {})
+        replies = metrics.get("reply_count", 0)
+        likes = metrics.get("like_count", 0)
+        ratio = replies / likes if likes > 0 else 0
+        text_lower = t["text"].lower()
+        has_conspiracy = any(kw in text_lower for kw in conspiracy_keywords)
+        
+        if ratio > 0.15 or (t["sentiment"] == "negative" and t["reach"] > 50000) or has_conspiracy:
+            severity = "HIGH" if ratio > 0.25 or has_conspiracy else "MEDIUM"
+            alert = {
+                "severity": severity,
+                "type": "auto_detected",
+                "post": f"{t['username']} — {t['created_at'][:10]}",
+                "text": t["text"][:200],
+                "metrics": metrics,
+                "replyLikeRatio": round(ratio, 3),
+                "reason": f"Reply:like ratio {ratio:.2f}. Reach {t['reach']:,}." + (" Conspiracy keywords detected." if has_conspiracy else ""),
+                "date": t["created_at"][:10] if t["created_at"] else today
+            }
+            # Don't duplicate (check by post key)
+            if not any(r.get("post") == alert["post"] for r in risk_alerts):
+                risk_alerts.append(alert)
+
     dashboard = {
         "meta": {
             "lastUpdated": now,
@@ -225,6 +252,9 @@ def build_dashboard_json(scored_tweets, brand_score):
             "keywords": ["rain maker", "rainmaker corp", "cloud seeding", "weather modification"]
         },
         "scores": scores[-90:],  # Keep 90 days
+        "riskAlerts": risk_alerts[-50:],  # Keep last 50 alerts
+        "accountProfiles": existing.get("accountProfiles", {}),
+        "aggregate": existing.get("aggregate", {}),
         "topMentions": [
             {
                 "user": t["username"],
