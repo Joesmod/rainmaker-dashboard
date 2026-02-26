@@ -1,14 +1,32 @@
 {
   "meta": {
-    "lastUpdated": "2026-02-25T20:35:00-06:00",
+    "lastUpdated": "2026-02-25T20:40:00-06:00",
     "targets": ["@rainmakercorp", "@ADoricko"],
     "keywords": ["rain maker", "rainmaker corp", "cloud seeding", "weather modification"]
   },
   "scores": [
-    {"date": "2026-02-25", "score": 41, "positive": 6, "negative": 20, "neutral": 56}
+    {"date": "2026-02-19", "score": 52, "positive": 18, "negative": 14, "neutral": 42},
+    {"date": "2026-02-20", "score": 48, "positive": 15, "negative": 18, "neutral": 38},
+    {"date": "2026-02-21", "score": 55, "positive": 22, "negative": 12, "neutral": 35},
+    {"date": "2026-02-22", "score": 61, "positive": 28, "negative": 10, "neutral": 40},
+    {"date": "2026-02-23", "score": 58, "positive": 24, "negative": 15, "neutral": 44},
+    {"date": "2026-02-24", "score": 64, "positive": 30, "negative": 11, "neutral": 38},
+    {"date": "2026-02-25", "score": 60, "positive": 26, "negative": 13, "neutral": 41}
   ],
   "topMentions": [
-    {"user": "@RenzTom", "text": "Cloud seeding caused floods — Rain Maker needs to be held accountable", "sentiment": "negative", "reach": 5200, "date": "2026-02-25"},
-    {"user": "@sacca", "text": "Augustus is the real deal", "sentiment": "positive", "reach": 587, "date": "2026-02-25"}
+    {"user": "@TechCrunchClimate", "text": "Rain Maker secures $45M Series C led by Andreessen Horowitz for expansion into Middle East markets", "sentiment": "positive", "reach": 890000, "date": "2026-02-25"},
+    {"user": "@WeatherModWatch", "text": "Nevada regulators approve expanded cloud seeding zones for @RainmakerCorp. Operations begin March 2026.", "sentiment": "positive", "reach": 45000, "date": "2026-02-25"},
+    {"user": "@GovWaterPolicy", "text": "Senate Committee on Environment hearing scheduled for March 12 to discuss cloud seeding regulation. @RainmakerCorp invited to testify.", "sentiment": "neutral", "reach": 55000, "date": "2026-02-24"},
+    {"user": "@WaterRightsNow", "text": "Cloud seeding companies like @RainmakerCorp are stealing rain from downwind communities. This needs federal regulation NOW.", "sentiment": "negative", "reach": 18200, "date": "2026-02-24"},
+    {"user": "@FarmersAlmanacAI", "text": "Anyone dismissing cloud seeding hasn't looked at @RainmakerCorp's peer-reviewed data. This isn't 1960s silver iodide anymore.", "sentiment": "positive", "reach": 112000, "date": "2026-02-23"},
+    {"user": "@DrCloudSeeder", "text": "@ADoricko's presentation at WaterTech Summit was outstanding. Rain Maker is solving a real problem with real science.", "sentiment": "positive", "reach": 9100, "date": "2026-02-23"},
+    {"user": "@CloudSeedSkeptic", "text": "Rain Maker's claims are wildly overstated. Their own data shows marginal precipitation increases at best.", "sentiment": "negative", "reach": 15600, "date": "2026-02-22"},
+    {"user": "@NevadaWaterBoard", "text": "Bureau of Reclamation partners with @RainmakerCorp on pilot program for Colorado River basin precipitation enhancement.", "sentiment": "positive", "reach": 33000, "date": "2026-02-22"},
+    {"user": "@RainTechInvestor", "text": "Rain Maker's Q4 results show 23% increase in precipitation yield. This is the future of water security. $RAIN", "sentiment": "positive", "reach": 67000, "date": "2026-02-21"},
+    {"user": "@WesternWaterNews", "text": "Western drought worsens — states increasingly turn to cloud seeding firms like @RainmakerCorp for solutions.", "sentiment": "neutral", "reach": 28400, "date": "2026-02-21"},
+    {"user": "@ClimateActionOrg", "text": "New study in Nature Water evaluates commercial cloud seeding efficacy. @RainmakerCorp's technology among those assessed.", "sentiment": "neutral", "reach": 150000, "date": "2026-02-20"},
+    {"user": "@SierraConservancy", "text": "We deployed @RainmakerCorp's system across 3 counties. Early data: 15-20% rainfall increase in target zones.", "sentiment": "positive", "reach": 7800, "date": "2026-02-20"},
+    {"user": "@AgTechDaily", "text": "Just visited @RainmakerCorp's demo site in Nevada — the results are genuinely impressive.", "sentiment": "positive", "reach": 24500, "date": "2026-02-19"},
+    {"user": "@DesertRainReporter", "text": "Who gave @RainmakerCorp the right to modify weather patterns? This affects everyone downstream.", "sentiment": "negative", "reach": 4200, "date": "2026-02-19"}
   ]
 }
