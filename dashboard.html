@@ -181,5 +181,14 @@ async function init() {
 
 init();
 </script>
+<div style="text-align:center;color:var(--dim);font-size:0.75rem;padding:24px 0 12px;border-top:1px solid var(--border);margin-top:32px;">
+  Rainmaker Social Scoring · Built by Gumbo · Data refreshes daily at 6 AM CT · <span id="footer-ts"></span>
+</div>
+<script>
+fetch('initial-pull.json?t='+Date.now()).then(r=>r.json()).then(d=>{
+  const el=document.getElementById('footer-ts');
+  if(d.pulled_at) el.textContent='Last updated: '+new Date(d.pulled_at).toLocaleString();
+}).catch(()=>{});
+</script>
 </body>
 </html>
