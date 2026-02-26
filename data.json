@@ -90,6 +90,62 @@
       "neutral": 3
     }
   ],
+  "riskAlerts": [
+    {
+      "severity": "HIGH",
+      "type": "controversy",
+      "post": "@ADoricko — Texas flood denial (2025-07-05)",
+      "text": "The natural disaster in the Texan Hill Country is a tragedy. My prayers are with Texas. Rainmaker did not operate in the affected area...",
+      "metrics": { "replies": 939, "reposts": 698, "likes": 3358, "views": 1511575 },
+      "replyLikeRatio": 0.28,
+      "reason": "Reply:like ratio 0.28 (threshold 0.15) — high controversy. Conspiracy keywords in replies. 1.5M views.",
+      "keywords": ["conspiracy", "weather control", "government"],
+      "date": "2025-07-05"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "political_rhetoric",
+      "post": "@ADoricko — Anti-elite rhetoric (2025-06-22)",
+      "text": "The elites have totally abandoned us and their responsibility to steward the nation",
+      "metrics": { "replies": 242, "reposts": 313, "likes": 5191, "views": 1643141 },
+      "replyLikeRatio": 0.047,
+      "reason": "CEO populist rhetoric. 1.6M views. Politicized reply section. Brand association risk.",
+      "keywords": ["elites", "abandoned"],
+      "date": "2025-06-22"
+    },
+    {
+      "severity": "MEDIUM",
+      "type": "notable_negative",
+      "post": "@FarmersAlmanacAI — Credibility challenge (2026-02-24)",
+      "text": "Rain Maker's claims are wildly overstated. Their own data shows marginal precipitation increases at best.",
+      "metrics": { "reach": 112000 },
+      "reason": "Negative mention from 112K-follower agriculture account. Credibility challenge.",
+      "keywords": ["overstated", "hype"],
+      "date": "2026-02-24"
+    }
+  ],
+  "accountProfiles": {
+    "RainmakerCorp": {
+      "handle": "@RainmakerCorp",
+      "followers": 13100,
+      "sentiment_score": 7,
+      "bio": "Next-gen cloud seeding for farms, ecosystems, and communities."
+    },
+    "ADoricko": {
+      "handle": "@ADoricko",
+      "followers": 36000,
+      "sentiment_score": 6,
+      "bio": "\"the face of Big Cloud\". making it rain (and snow)"
+    }
+  },
+  "aggregate": {
+    "total_followers_combined": 49100,
+    "ceo_to_corp_follower_ratio": 2.75,
+    "avg_engagement_corp": 204,
+    "avg_engagement_ceo": 3090,
+    "risk_signals": ["Texas flood conspiracy attention", "politicized reply sections", "anti-establishment CEO rhetoric"],
+    "key_topics": ["cloud seeding", "Great Salt Lake", "weather modification", "Utah", "freshwater"]
+  },
   "topMentions": [
     {
       "user": "@TechCrunchClimate",

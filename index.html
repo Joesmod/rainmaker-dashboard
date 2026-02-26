@@ -48,6 +48,20 @@
         .badge-negative { background: rgba(239,68,68,0.15); color: var(--red); }
         .badge-neutral { background: rgba(234,179,8,0.15); color: var(--yellow); }
         .reach { color: var(--muted); }
+        .risk-item { padding: 14px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid; }
+        .risk-high { background: rgba(239,68,68,0.08); border-color: var(--red); }
+        .risk-medium { background: rgba(234,179,8,0.08); border-color: var(--yellow); }
+        .risk-low { background: rgba(59,130,246,0.08); border-color: var(--accent); }
+        .risk-item .risk-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .risk-item .risk-title { font-weight: 600; font-size: 0.85rem; }
+        .risk-item .risk-text { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; font-style: italic; }
+        .risk-item .risk-reason { font-size: 0.8rem; color: var(--text); }
+        .risk-item .risk-keywords { margin-top: 6px; }
+        .risk-item .risk-keywords span { background: rgba(239,68,68,0.15); color: var(--red); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; margin-right: 4px; }
+        .profile-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .profile-card .handle { color: var(--accent); font-weight: 600; }
+        .profile-card .followers { font-size: 1.5rem; font-weight: 700; }
+        .profile-card .bio { color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
         .footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 32px; }
         .loading { text-align: center; padding: 60px; color: var(--muted); }
     </style>
@@ -72,6 +86,13 @@
         <h2>📊 Sentiment Breakdown</h2>
         <div class="chart-container"><canvas id="sentimentChart"></canvas></div>
     </div>
+
+    <div class="card" id="riskCard" style="display:none; border-color: var(--red);">
+        <h2>🚨 Risk Alerts</h2>
+        <div id="riskAlerts"></div>
+    </div>
+
+    <div class="grid" id="profileGrid" style="display:none;"></div>
 
     <div class="card">
         <h2>🔥 Top Mentions</h2>
@@ -169,6 +190,42 @@
             `).join('');
         }
 
+        function renderRiskAlerts(data) {
+            if (!data.riskAlerts || !data.riskAlerts.length) return;
+            document.getElementById('riskCard').style.display = 'block';
+            const el = document.getElementById('riskAlerts');
+            el.innerHTML = data.riskAlerts.map(a => {
+                const cls = a.severity === 'HIGH' ? 'risk-high' : a.severity === 'MEDIUM' ? 'risk-medium' : 'risk-low';
+                const metrics = a.metrics ? Object.entries(a.metrics).map(([k,v]) => `${k}: ${v.toLocaleString()}`).join(' · ') : '';
+                const keywords = (a.keywords || []).map(k => `<span>${k}</span>`).join('');
+                return `<div class="risk-item ${cls}">
+                    <div class="risk-header">
+                        <span class="risk-title">${a.post}</span>
+                        <span class="badge badge-negative">${a.severity}</span>
+                    </div>
+                    <div class="risk-text">"${a.text}"</div>
+                    <div class="risk-reason">${a.reason}</div>
+                    ${metrics ? `<div style="color:var(--muted);font-size:0.75rem;margin-top:4px">${metrics}</div>` : ''}
+                    ${keywords ? `<div class="risk-keywords">${keywords}</div>` : ''}
+                </div>`;
+            }).join('');
+        }
+
+        function renderProfiles(data) {
+            if (!data.accountProfiles) return;
+            document.getElementById('profileGrid').style.display = 'grid';
+            const el = document.getElementById('profileGrid');
+            el.innerHTML = Object.values(data.accountProfiles).map(p => `
+                <div class="profile-card">
+                    <div class="label">Account</div>
+                    <div class="handle">${p.handle}</div>
+                    <div class="followers">${p.followers.toLocaleString()}</div>
+                    <div class="label">followers · sentiment ${p.sentiment_score}/10</div>
+                    <div class="bio">${p.bio}</div>
+                </div>
+            `).join('');
+        }
+
         async function loadData() {
             try {
                 const resp = await fetch('data.json?t=' + Date.now());
@@ -180,6 +237,8 @@
                 renderScoreChart(data);
                 renderSentimentChart(data);
                 renderMentions(data);
+                renderRiskAlerts(data);
+                renderProfiles(data);
             } catch (e) {
                 console.error('Failed to load data:', e);
                 document.getElementById('mentionsList').innerHTML = '<li class="loading">Failed to load data.json</li>';
