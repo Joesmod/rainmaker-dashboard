@@ -173,6 +173,9 @@
             try {
                 const resp = await fetch('data.json?t=' + Date.now());
                 const data = await resp.json();
+                if (data.meta && data.meta.lastUpdated) {
+                    document.getElementById('lastUpdated').textContent = 'Last updated: ' + new Date(data.meta.lastUpdated).toLocaleString();
+                }
                 renderStats(data);
                 renderScoreChart(data);
                 renderSentimentChart(data);
