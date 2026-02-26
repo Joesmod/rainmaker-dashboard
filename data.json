@@ -1,32 +1,230 @@
 {
   "meta": {
-    "lastUpdated": "2026-02-25T20:40:00-06:00",
-    "targets": ["@rainmakercorp", "@ADoricko"],
-    "keywords": ["rain maker", "rainmaker corp", "cloud seeding", "weather modification"]
+    "lastUpdated": "2026-02-25T20:45:55.229365-06:00",
+    "targets": [
+      "@rainmakercorp",
+      "@ADoricko"
+    ],
+    "keywords": [
+      "rain maker",
+      "rainmaker corp",
+      "cloud seeding",
+      "weather modification"
+    ],
+    "scoring": {
+      "method": "weighted",
+      "weights": {
+        "government": 3.0,
+        "criticism": 2.0,
+        "support": 1.5,
+        "news": 1.5,
+        "inquiry": 0.75,
+        "neutral_mention": 1.0
+      },
+      "formula": "brand_score = 50 + (weighted_avg_sentiment * 40), clamped [0,100]",
+      "reach_normalization": "log10(followers+1) / 5"
+    },
+    "alerts": [
+      {
+        "level": "HIGH",
+        "type": "notable_negative",
+        "message": "Negative mention from @FarmersAlmanacAI (112,000 followers): Rain Maker's claims are wildly overstated. Their own data shows marginal precipitation increases at "
+      }
+    ],
+    "alert_thresholds": {
+      "score_drop_high": 10,
+      "score_drop_medium": 5,
+      "notable_negative_followers": 50000,
+      "negative_burst_count": 3,
+      "negative_burst_window_hours": 1
+    }
   },
   "scores": [
-    {"date": "2026-02-19", "score": 52, "positive": 18, "negative": 14, "neutral": 42},
-    {"date": "2026-02-20", "score": 48, "positive": 15, "negative": 18, "neutral": 38},
-    {"date": "2026-02-21", "score": 55, "positive": 22, "negative": 12, "neutral": 35},
-    {"date": "2026-02-22", "score": 61, "positive": 28, "negative": 10, "neutral": 40},
-    {"date": "2026-02-23", "score": 58, "positive": 24, "negative": 15, "neutral": 44},
-    {"date": "2026-02-24", "score": 64, "positive": 30, "negative": 11, "neutral": 38},
-    {"date": "2026-02-25", "score": 60, "positive": 26, "negative": 13, "neutral": 41}
+    {
+      "date": "2026-02-19",
+      "score": 57.0,
+      "positive": 5,
+      "negative": 1,
+      "neutral": 4
+    },
+    {
+      "date": "2026-02-20",
+      "score": 53.7,
+      "positive": 6,
+      "negative": 2,
+      "neutral": 2
+    },
+    {
+      "date": "2026-02-21",
+      "score": 53.4,
+      "positive": 6,
+      "negative": 0,
+      "neutral": 4
+    },
+    {
+      "date": "2026-02-22",
+      "score": 54.5,
+      "positive": 7,
+      "negative": 0,
+      "neutral": 3
+    },
+    {
+      "date": "2026-02-23",
+      "score": 62.7,
+      "positive": 4,
+      "negative": 3,
+      "neutral": 3
+    },
+    {
+      "date": "2026-02-24",
+      "score": 54.5,
+      "positive": 4,
+      "negative": 1,
+      "neutral": 5
+    },
+    {
+      "date": "2026-02-25",
+      "score": 58.5,
+      "positive": 5,
+      "negative": 2,
+      "neutral": 3
+    }
   ],
   "topMentions": [
-    {"user": "@TechCrunchClimate", "text": "Rain Maker secures $45M Series C led by Andreessen Horowitz for expansion into Middle East markets", "sentiment": "positive", "reach": 890000, "date": "2026-02-25"},
-    {"user": "@WeatherModWatch", "text": "Nevada regulators approve expanded cloud seeding zones for @RainmakerCorp. Operations begin March 2026.", "sentiment": "positive", "reach": 45000, "date": "2026-02-25"},
-    {"user": "@GovWaterPolicy", "text": "Senate Committee on Environment hearing scheduled for March 12 to discuss cloud seeding regulation. @RainmakerCorp invited to testify.", "sentiment": "neutral", "reach": 55000, "date": "2026-02-24"},
-    {"user": "@WaterRightsNow", "text": "Cloud seeding companies like @RainmakerCorp are stealing rain from downwind communities. This needs federal regulation NOW.", "sentiment": "negative", "reach": 18200, "date": "2026-02-24"},
-    {"user": "@FarmersAlmanacAI", "text": "Anyone dismissing cloud seeding hasn't looked at @RainmakerCorp's peer-reviewed data. This isn't 1960s silver iodide anymore.", "sentiment": "positive", "reach": 112000, "date": "2026-02-23"},
-    {"user": "@DrCloudSeeder", "text": "@ADoricko's presentation at WaterTech Summit was outstanding. Rain Maker is solving a real problem with real science.", "sentiment": "positive", "reach": 9100, "date": "2026-02-23"},
-    {"user": "@CloudSeedSkeptic", "text": "Rain Maker's claims are wildly overstated. Their own data shows marginal precipitation increases at best.", "sentiment": "negative", "reach": 15600, "date": "2026-02-22"},
-    {"user": "@NevadaWaterBoard", "text": "Bureau of Reclamation partners with @RainmakerCorp on pilot program for Colorado River basin precipitation enhancement.", "sentiment": "positive", "reach": 33000, "date": "2026-02-22"},
-    {"user": "@RainTechInvestor", "text": "Rain Maker's Q4 results show 23% increase in precipitation yield. This is the future of water security. $RAIN", "sentiment": "positive", "reach": 67000, "date": "2026-02-21"},
-    {"user": "@WesternWaterNews", "text": "Western drought worsens — states increasingly turn to cloud seeding firms like @RainmakerCorp for solutions.", "sentiment": "neutral", "reach": 28400, "date": "2026-02-21"},
-    {"user": "@ClimateActionOrg", "text": "New study in Nature Water evaluates commercial cloud seeding efficacy. @RainmakerCorp's technology among those assessed.", "sentiment": "neutral", "reach": 150000, "date": "2026-02-20"},
-    {"user": "@SierraConservancy", "text": "We deployed @RainmakerCorp's system across 3 counties. Early data: 15-20% rainfall increase in target zones.", "sentiment": "positive", "reach": 7800, "date": "2026-02-20"},
-    {"user": "@AgTechDaily", "text": "Just visited @RainmakerCorp's demo site in Nevada — the results are genuinely impressive.", "sentiment": "positive", "reach": 24500, "date": "2026-02-19"},
-    {"user": "@DesertRainReporter", "text": "Who gave @RainmakerCorp the right to modify weather patterns? This affects everyone downstream.", "sentiment": "negative", "reach": 4200, "date": "2026-02-19"}
+    {
+      "user": "@TechCrunchClimate",
+      "text": "@ADoricko's presentation at WaterTech Summit was outstanding. Rain Maker is solving a real problem with real science, not vaporware.",
+      "sentiment": "positive",
+      "reach": 890000,
+      "date": "2026-02-21",
+      "category": "support",
+      "weighted_score": 0.457
+    },
+    {
+      "user": "@ClimateActionOrg",
+      "text": "We deployed @RainmakerCorp's system across 3 counties. Early data: 15-20% rainfall increase in target zones. Cautiously optimistic.",
+      "sentiment": "positive",
+      "reach": 150000,
+      "date": "2026-02-23",
+      "category": "support",
+      "weighted_score": 1.25
+    },
+    {
+      "user": "@FarmersAlmanacAI",
+      "text": "Just visited @RainmakerCorp's demo site in Nevada \u2014 the results are genuinely impressive. Cloud seeding at this scale could be a game changer for western agriculture.",
+      "sentiment": "positive",
+      "reach": 112000,
+      "date": "2026-02-19",
+      "category": "support",
+      "weighted_score": 1.295
+    },
+    {
+      "user": "@ClimateActionOrg",
+      "text": "Just visited @RainmakerCorp's demo site in Nevada \u2014 the results are genuinely impressive. Cloud seeding at this scale could be a game changer for western agriculture.",
+      "sentiment": "positive",
+      "reach": 150000,
+      "date": "2026-02-25",
+      "category": "support",
+      "weighted_score": 0.863
+    },
+    {
+      "user": "@FarmersAlmanacAI",
+      "text": "@ADoricko's presentation at WaterTech Summit was outstanding. Rain Maker is solving a real problem with real science, not vaporware.",
+      "sentiment": "positive",
+      "reach": 112000,
+      "date": "2026-02-20",
+      "category": "support",
+      "weighted_score": 0.988
+    },
+    {
+      "user": "@FarmersAlmanacAI",
+      "text": "@ADoricko's presentation at WaterTech Summit was outstanding. Rain Maker is solving a real problem with real science, not vaporware.",
+      "sentiment": "positive",
+      "reach": 112000,
+      "date": "2026-02-22",
+      "category": "support",
+      "weighted_score": 0.98
+    },
+    {
+      "user": "@TechCrunchClimate",
+      "text": "Nevada regulators approve expanded cloud seeding zones for @RainmakerCorp. Operations begin March 2026.",
+      "sentiment": "neutral",
+      "reach": 890000,
+      "date": "2026-02-22",
+      "category": "news",
+      "weighted_score": 0.109
+    },
+    {
+      "user": "@RainTechInvestor",
+      "text": "Anyone dismissing cloud seeding hasn't looked at @RainmakerCorp's peer-reviewed data. This isn't 1960s silver iodide anymore.",
+      "sentiment": "positive",
+      "reach": 67000,
+      "date": "2026-02-19",
+      "category": "support",
+      "weighted_score": 1.034
+    },
+    {
+      "user": "@FarmersAlmanacAI",
+      "text": "Rain Maker's claims are wildly overstated. Their own data shows marginal precipitation increases at best. Don't believe the hype.",
+      "sentiment": "negative",
+      "reach": 112000,
+      "date": "2026-02-24",
+      "category": "criticism",
+      "weighted_score": -0.755
+    },
+    {
+      "user": "@TechCrunchClimate",
+      "text": "Weather modification companies including @RainmakerCorp and three others have applied for expanded permits in Colorado.",
+      "sentiment": "neutral",
+      "reach": 890000,
+      "date": "2026-02-24",
+      "category": "neutral_mention",
+      "weighted_score": 0.047
+    },
+    {
+      "user": "@GovWaterPolicy",
+      "text": "Anyone dismissing cloud seeding hasn't looked at @RainmakerCorp's peer-reviewed data. This isn't 1960s silver iodide anymore.",
+      "sentiment": "positive",
+      "reach": 55000,
+      "date": "2026-02-19",
+      "category": "support",
+      "weighted_score": 0.968
+    },
+    {
+      "user": "@WeatherModWatch",
+      "text": "Anyone dismissing cloud seeding hasn't looked at @RainmakerCorp's peer-reviewed data. This isn't 1960s silver iodide anymore.",
+      "sentiment": "positive",
+      "reach": 45000,
+      "date": "2026-02-22",
+      "category": "support",
+      "weighted_score": 1.178
+    },
+    {
+      "user": "@WeatherModWatch",
+      "text": "We deployed @RainmakerCorp's system across 3 counties. Early data: 15-20% rainfall increase in target zones. Cautiously optimistic.",
+      "sentiment": "positive",
+      "reach": 45000,
+      "date": "2026-02-20",
+      "category": "support",
+      "weighted_score": 1.139
+    },
+    {
+      "user": "@NevadaWaterBoard",
+      "text": "Rain Maker's Q4 results show 23% increase in precipitation yield. This is the future of water security. $RAIN",
+      "sentiment": "positive",
+      "reach": 33000,
+      "date": "2026-02-19",
+      "category": "support",
+      "weighted_score": 1.393
+    },
+    {
+      "user": "@RainTechInvestor",
+      "text": "Just visited @RainmakerCorp's demo site in Nevada \u2014 the results are genuinely impressive. Cloud seeding at this scale could be a game changer for western agriculture.",
+      "sentiment": "positive",
+      "reach": 67000,
+      "date": "2026-02-20",
+      "category": "support",
+      "weighted_score": 0.663
+    }
   ]
 }
