@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain Maker — Social Scoring Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --card: #131a2b;
+            --border: #1e2a42;
+            --text: #e2e8f0;
+            --muted: #8892a4;
+            --accent: #3b82f6;
+            --green: #22c55e;
+            --red: #ef4444;
+            --yellow: #eab308;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; padding: 24px; }
+        h1 { font-size: 1.5rem; margin-bottom: 4px; }
+        .subtitle { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+        }
+        .stat-card .label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .stat-card .value { font-size: 2rem; font-weight: 700; }
+        .score-positive { color: var(--green); }
+        .score-neutral { color: var(--yellow); }
+        .score-negative { color: var(--red); }
+        .card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 24px;
+        }
+        .card h2 { font-size: 1rem; margin-bottom: 16px; }
+        .chart-container { position: relative; height: 300px; }
+        .mentions-list { list-style: none; }
+        .mentions-list li {
+            padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+        }
+        .mentions-list li:last-child { border-bottom: none; }
+        .mention-user { font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+        .mention-text { color: var(--muted); font-size: 0.85rem; flex: 1; }
+        .mention-meta { text-align: right; white-space: nowrap; font-size: 0.75rem; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; }
+        .badge-positive { background: rgba(34,197,94,0.15); color: var(--green); }
+        .badge-negative { background: rgba(239,68,68,0.15); color: var(--red); }
+        .badge-neutral { background: rgba(234,179,8,0.15); color: var(--yellow); }
+        .reach { color: var(--muted); }
+        .footer { text-align: center; color: var(--muted); font-size: 0.75rem; margin-top: 32px; }
+        .loading { text-align: center; padding: 60px; color: var(--muted); }
+    </style>
+</head>
+<body>
+    <h1>🌧️ Rain Maker — Social Scoring</h1>
+    <p class="subtitle">Brand perception tracker · <span id="lastUpdated">Loading...</span></p>
+
+    <div class="grid" id="statsGrid">
+        <div class="stat-card"><div class="label">Brand Score</div><div class="value" id="brandScore">—</div></div>
+        <div class="stat-card"><div class="label">Positive</div><div class="value score-positive" id="posCount">—</div></div>
+        <div class="stat-card"><div class="label">Negative</div><div class="value score-negative" id="negCount">—</div></div>
+        <div class="stat-card"><div class="label">Neutral</div><div class="value score-neutral" id="neuCount">—</div></div>
+    </div>
+
+    <div class="card">
+        <h2>📈 Brand Score Over Time</h2>
+        <div class="chart-container"><canvas id="scoreChart"></canvas></div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Sentiment Breakdown</h2>
+        <div class="chart-container"><canvas id="sentimentChart"></canvas></div>
+    </div>
+
+    <div class="card">
+        <h2>🔥 Top Mentions</h2>
+        <ul class="mentions-list" id="mentionsList"><li class="loading">Loading data...</li></ul>
+    </div>
+
+    <div class="footer">Rain Maker Social Scoring · Built by Gumbo · Data refreshes daily</div>
+
+    <script>
+        let scoreChart, sentimentChart;
+
+        function getScoreClass(score) {
+            if (score >= 60) return 'score-positive';
+            if (score >= 40) return 'score-neutral';
+            return 'score-negative';
+        }
+
+        function renderStats(data) {
+            const latest = data.scores[data.scores.length - 1];
+            if (!latest) return;
+            const el = document.getElementById('brandScore');
+            el.textContent = latest.score;
+            el.className = 'value ' + getScoreClass(latest.score);
+            document.getElementById('posCount').textContent = latest.positive;
+            document.getElementById('negCount').textContent = latest.negative;
+            document.getElementById('neuCount').textContent = latest.neutral;
+            document.getElementById('lastUpdated').textContent = 'Last updated: ' + latest.date;
+        }
+
+        function renderScoreChart(data) {
+            const ctx = document.getElementById('scoreChart').getContext('2d');
+            if (scoreChart) scoreChart.destroy();
+            scoreChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.scores.map(s => s.date),
+                    datasets: [{
+                        label: 'Brand Score',
+                        data: data.scores.map(s => s.score),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59,130,246,0.1)',
+                        fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#3b82f6'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        y: { min: 0, max: 100, grid: { color: '#1e2a42' }, ticks: { color: '#8892a4' } },
+                        x: { grid: { color: '#1e2a42' }, ticks: { color: '#8892a4' } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function renderSentimentChart(data) {
+            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            if (sentimentChart) sentimentChart.destroy();
+            sentimentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.scores.map(s => s.date),
+                    datasets: [
+                        { label: 'Positive', data: data.scores.map(s => s.positive), backgroundColor: '#22c55e' },
+                        { label: 'Negative', data: data.scores.map(s => s.negative), backgroundColor: '#ef4444' },
+                        { label: 'Neutral', data: data.scores.map(s => s.neutral), backgroundColor: '#eab308' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        y: { stacked: true, grid: { color: '#1e2a42' }, ticks: { color: '#8892a4' } },
+                        x: { stacked: true, grid: { color: '#1e2a42' }, ticks: { color: '#8892a4' } }
+                    },
+                    plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                }
+            });
+        }
+
+        function renderMentions(data) {
+            const list = document.getElementById('mentionsList');
+            if (!data.topMentions || !data.topMentions.length) {
+                list.innerHTML = '<li style="color:var(--muted)">No mentions yet</li>';
+                return;
+            }
+            list.innerHTML = data.topMentions.map(m => `
+                <li>
+                    <span class="mention-user">${m.user}</span>
+                    <span class="mention-text">${m.text}</span>
+                    <span class="mention-meta">
+                        <span class="badge badge-${m.sentiment}">${m.sentiment}</span><br>
+                        <span class="reach">${(m.reach || 0).toLocaleString()} reach</span>
+                    </span>
+                </li>
+            `).join('');
+        }
+
+        async function loadData() {
+            try {
+                const resp = await fetch('data.json?t=' + Date.now());
+                const data = await resp.json();
+                renderStats(data);
+                renderScoreChart(data);
+                renderSentimentChart(data);
+                renderMentions(data);
+            } catch (e) {
+                console.error('Failed to load data:', e);
+                document.getElementById('mentionsList').innerHTML = '<li class="loading">Failed to load data.json</li>';
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

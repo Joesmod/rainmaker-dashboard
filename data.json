@@ -1,0 +1,18 @@
+{
+  "scores": [
+    {"date": "2026-02-19", "score": 58, "positive": 32, "negative": 18, "neutral": 27},
+    {"date": "2026-02-20", "score": 61, "positive": 38, "negative": 15, "neutral": 30},
+    {"date": "2026-02-21", "score": 55, "positive": 29, "negative": 22, "neutral": 25},
+    {"date": "2026-02-22", "score": 63, "positive": 41, "negative": 14, "neutral": 28},
+    {"date": "2026-02-23", "score": 67, "positive": 45, "negative": 11, "neutral": 33},
+    {"date": "2026-02-24", "score": 70, "positive": 48, "negative": 10, "neutral": 29},
+    {"date": "2026-02-25", "score": 72, "positive": 45, "negative": 12, "neutral": 31}
+  ],
+  "topMentions": [
+    {"user": "@WaterTechDaily", "text": "Rain Maker's drone-based cloud seeding is showing real results in Utah. This could change the game for western water.", "sentiment": "positive", "reach": 15200},
+    {"user": "@ClimatePolicyDC", "text": "Weather modification technology deserves serious regulatory attention. Rain Maker leading the charge.", "sentiment": "neutral", "reach": 8900},
+    {"user": "@ADoricko", "text": "Excited to share our latest results from the Jordan pilot program. Water modification works.", "sentiment": "positive", "reach": 12400},
+    {"user": "@TXWeatherWatch", "text": "Still no accountability for cloud seeding impacts on Texas rainfall patterns. @rainmakercorp needs to answer.", "sentiment": "negative", "reach": 6200},
+    {"user": "@VCInsider", "text": "Rain Maker quietly building one of the most important climate tech companies. Thiel Fellows alumni doing real work.", "sentiment": "positive", "reach": 22100}
+  ]
+}
